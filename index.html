@@ -622,7 +622,7 @@
 
       <section class="section-card result-section" id="resultSection">
         <div class="result-card result-panel">
-          <div class="result-label">התוצאה שלך</div>
+          <div class="result-label">לפי התשובות שלך, נראה שהקול הבולט ביותר כרגע הוא:</div>
           <h2 id="resultTitle">הצגת תוצאה</h2>
           <p class="result-highlight">לפעמים מה שעוצר אותנו הוא לא חוסר יכולת — אלא הפחד מאיך זה ייראה מבחוץ.</p>
           <p class="result-intro" id="resultReflection">רפלקציה רגשית קצרה על תחושתך.</p>
@@ -631,9 +631,8 @@
         </div>
 
         <div class="form-intro">
-          <h3 class="form-intro-title">מהתוצאה שקיבלת אפשר ללמוד ש...</h3>
-          <p class="form-intro-text">יש קול פנימי שמנסה להגן עליך — אבל יכול להיות שהוא גם מחזיק אותך במקום.</p>
-          <p class="form-intro-text">אם משהו בתוצאה הזו הרגיש לך נכון, אפשר לשלוח לי אותה בוואטסאפ.<br>נבדוק יחד מה היא מספרת על המקום שבו את/ה נמצא/ת עכשיו, ומה יכול להיות הצעד הבא שלך.</p>
+          <h3 class="form-intro-title">רוצה להבין מה התוצאה הזו אומרת עבורך?</h3>
+          <p class="form-intro-text">שלח/י לי את התוצאה בוואטסאפ ואחזיר לך הסבר קצר:<br>מה הקול הזה אולי מנסה להגן אצלך,<br>איך הוא יכול להשאיר אותך במקום,<br>ואילו אפשרויות קיימות להתחיל לזוז — באימון אישי או בתהליך קבוצתי.</p>
         </div>
         <div class="form-panel">
           <form class="form-grid" id="leadForm" novalidate>
@@ -658,7 +657,7 @@
         </div>
 
         <div class="button-row" style="margin-top: 8px;">
-          <a id="whatsAppButton" class="button main-action disabled" href="#" target="_blank" rel="noopener noreferrer">שליחת התוצאה לגל בוואטסאפ</a>
+          <a id="whatsAppButton" class="button main-action disabled" href="#" target="_blank" rel="noopener noreferrer">שליחת התוצאה וקבלת הסבר קצר</a>
         </div>
 
         <p class="whatsapp-note">הפרטים לא נשמרים באתר בשלב זה — הם נשלחים אליי רק דרך הודעת הוואטסאפ שתיפתח אצלך.</p>
@@ -670,59 +669,71 @@
   <script>
     const quizQuestions = [
       {
-        title: "כשאת/ה מתקרב/ת לשינוי, איזה קול פנימי גורם לך להישאר במקום?",
-        options: [
-          { label: "אני מרגיש/ה שאני עדיין לא מוכן/ה מספיק", resultType: "ready" },
-          { label: "אני חושב/ת איך אחרים יגיבו", resultType: "judgment" },
-          { label: "אני מחפש/ת עוד אפשרויות לפני שאני מחליט/ה", resultType: "overthinking" },
-          { label: "אני מחכה לאישור ממישהו אחר", resultType: "approval" },
-        ],
+        id: 1,
+        question: "כשאת/ה מתקרב/ת לשינוי משמעותי, איזה קול פנימי עולה ראשון?",
+        answers: [
+          { text: "אני מרגיש/ה שחסר לי עוד קצת ידע או ניסיון כדי שזה באמת יצליח.", resultType: "ready" },
+          { text: "אני ישר חושב/ת איך זה ייראה מהצד ומי עלול להרים גבה.", resultType: "judgment" },
+          { text: "הראש שלי מתחיל להריץ את כל התרחישים האפשריים שעלולים להשתבש.", resultType: "overthinking" },
+          { text: "אני מחפש/ת מישהו שקרוב אליי שיגיד לי שזה רעיון טוב.", resultType: "approval" },
+          { text: "אני יודע/ת שזה הדבר הנכון, אבל משהו בי עדיין לא מצליח לזוז.", resultType: "knowsButStuck" }
+        ]
       },
       {
-        title: "כשאת/ה עומד/ת מול בחירה שיכולה להזיז אותך קדימה, איזה קול פנימי משתלט?",
-        options: [
-          { label: "הקול שאומר לי: זה לא הזמן המתאים, עדיף לחכות שהתנאים יהיו יותר ברורים.", resultType: "ready" },
-          { label: "הקול שאומר לי: עדיף להישאר במה שמוכר, גם אם כבר לא באמת טוב לי שם.", resultType: "judgment" },
-          { label: "הקול שאומר לי: אני צריך/ה להבין עוד קצת לפני שאפשר באמת לבחור.", resultType: "overthinking" },
-          { label: "הקול שגורם לי לזוז רק כשהלחץ כבר נהיה חזק מדי.", resultType: "approval" },
-        ],
+        id: 2,
+        question: "כשצריך לבחור כיוון חדש, מה הכי מעסיק אותך?",
+        answers: [
+          { text: "האם אני באמת מוכן/ה לאחריות הזו כבר עכשיו?", resultType: "ready" },
+          { text: "מה המחיר החברתי או המשפחתי שאשלם על הבחירה הזו?", resultType: "judgment" },
+          { text: "לבנות רשימת בעד ונגד ולבדוק אותה שוב ושוב מכל כיוון.", resultType: "overthinking" },
+          { text: "הלוואי שמישהו היה פשוט אומר לי מה הדבר הנכון לעשות.", resultType: "approval" },
+          { text: "אני כבר יודע/ת מה אני רוצה, אבל ממשיך/ה להתנהג כאילו אני מתלבט/ת.", resultType: "knowsButStuck" }
+        ]
       },
       {
-        title: "כשמגיעה הזדמנות שאת/ה באמת רוצה, מה קורה אצלך רגע אחרי ההתלהבות הראשונית?",
-        options: [
-          { label: "הקול שאומר לי: מי אני בכלל שאקח את זה על עצמי? אולי אני לא באמת מוכן/ה.", resultType: "ready" },
-          { label: "הקול שמתחיל להריץ בראש את כל מה שעלול להשתבש, עד שההתלהבות נעלמת.", resultType: "judgment" },
-          { label: "הקול שאומר לי: עדיף להישאר במה שמוכר ובטוח, לא שווה להסתכן בשביל זה.", resultType: "overthinking" },
-          { label: "הקול שמזכיר לי את כל המחויבויות שלי וגורם לי להרגיש לא נעים לרצות משהו בשביל עצמי.", resultType: "approval" },
-        ],
+        id: 3,
+        question: "כשמגיעה הזדמנות טובה, מה עלול לגרום לך לעצור?",
+        answers: [
+          { text: "כי זה מרגיש לי קצת גדול עליי כרגע, אולי עוד שנה.", resultType: "ready" },
+          { text: "כי אני מפחד/ת לאכזב את האנשים שסומכים עליי בדרך הנוכחית.", resultType: "judgment" },
+          { text: "כי אני צריך/ה עוד זמן לחשוב על כל הפרטים הקטנים.", resultType: "overthinking" },
+          { text: "כי אף אחד עוד לא אמר לי שזה באמת מתאים לי.", resultType: "approval" },
+          { text: "אין סיבה הגיונית, אני פשוט מוצא/ת את עצמי נשאר/ת במקום המוכר.", resultType: "knowsButStuck" }
+        ]
       },
       {
-        title: "כשאת/ה חושב/ת על העתיד שאת/ה רוצה, איזה קול פנימי עוצר אותך?",
-        options: [
-          { label: "הקול שמריץ לי בראש את כל מה שעלול להשתבש, עד שהשינוי עצמו מתחיל להרגיש מפחיד.", resultType: "ready" },
-          { label: "הקול שמשווה אותי לאחרים וגורם לי להרגיש שאני לא מספיק טוב/ה.", resultType: "judgment" },
-          { label: "הקול שאומר לי שזה גדול עליי כרגע, ושעדיף לחכות עד שארגיש מוכן/ה יותר.", resultType: "overthinking" },
-          { label: "הקול שאומר לי: חבל להשקיע בזה אנרגיה, בסוף בטח משהו ישתבש.", resultType: "approval" },
-        ],
+        id: 4,
+        question: "כשאת/ה חושב/ת על העתיד שלך, מה התחושה השלטת?",
+        answers: [
+          { text: "אני אגיע לשם, רק צריך/ה עוד קצת זמן להתארגן על עצמי.", resultType: "ready" },
+          { text: "חשש מהרגע שבו אצטרך להסביר לכולם למה עשיתי את השינוי.", resultType: "judgment" },
+          { text: "עומס בראש מרוב תוכניות, קשה לי לראות מה הצעד הראשון.", resultType: "overthinking" },
+          { text: "תקווה שמישהו ייתן לי את הדחיפה או האישור שאני צריך/ה.", resultType: "approval" },
+          { text: "תסכול מזה שאני רואה את עצמי שם, אבל בפועל שום דבר לא משתנה.", resultType: "knowsButStuck" }
+        ]
       },
       {
-        title: "כשאת/ה מחליט/ה שהפעם את/ה באמת הולך/ת על שינוי, איזו מחשבה קופצת ראשונה ועוצרת אותך?",
-        options: [
-          { label: "המחשבה שאומרת לי: עדיף לא לערבב את הקלפים, אולי כדאי להסתפק במה שיש.", resultType: "ready" },
-          { label: "המחשבה שאומרת לי: אני עדיין לא מוכן/ה, צריך עוד ללמוד, לחסוך או להתארגן לפני שאעשה צעד אמיתי.", resultType: "judgment" },
-          { label: "המחשבה שאומרת לי: כבר ניסיתי דברים דומים בעבר וזה לא באמת החזיק, אז למה שהפעם זה יהיה שונה?", resultType: "overthinking" },
-          { label: "המחשבה שאומרת לי: זה לא הזמן הנכון, יש אנשים ודברים שצריכים אותי עכשיו יותר.", resultType: "approval" },
-        ],
+        id: 5,
+        question: "מה קורה כשהחלטת ש'היום מתחילים'?",
+        answers: [
+          { text: "אני מוצא/ת עוד משהו קטן שחייבים לסדר לפני שבאמת יוצאים לדרך.", resultType: "ready" },
+          { text: "אני מתחיל/ה לחשוב מי ייפגע או ייעלב מהשינוי הזה.", resultType: "judgment" },
+          { text: "אני שוקע/ת בתכנון הלו״ז והשלבים עד שאני מתעייף/ת ולא עושה כלום.", resultType: "overthinking" },
+          { text: "אני בודק/ת עם חבר/ה או בן משפחה אם זה נראה להם הגיוני.", resultType: "approval" },
+          { text: "אני פשוט לא עושה את זה. הידיעה קיימת, הפעולה לא.", resultType: "knowsButStuck" }
+        ]
       },
       {
-        title: "כשמישהו שואל אותך \"למה את/ה עדיין מחכה?\", מה התשובה האמיתית שמתחת להסבר הרגיל?",
-        options: [
-          { label: "האמת היא שאני מפחד/ת שברגע שזה יצליח, זה ידרוש ממני מחויבות ומחיר שאני לא בטוח/ה שאני רוצה לשלם.", resultType: "knowsButStuck" },
-          { label: "האמת היא שאני חושב/ת יותר מדי על מה יגידו, איך ישפטו אותי, ומה יקרה אם זה לא יצליח.", resultType: "ready" },
-          { label: "האמת היא שנוח לי להאמין שאני תיכף עושה את זה, למרות שבפועל אני רק דוחה את הרגע להתחיל.", resultType: "judgment" },
-          { label: "האמת היא שעמוק בפנים אני עדיין לא בטוח/ה שזה באמת מגיע לי, או שאני מסוגל/ת להחזיק שינוי כזה לאורך זמן.", resultType: "overthinking" },
-        ],
-      },
+        id: 6,
+        question: "כשאת/ה שואל/ת את עצמך: \"למה אני עדיין מחכה?\", מה התשובה הכי כנה שעולה?",
+        answers: [
+          { text: "כי אני עדיין לא מרגיש/ה מספיק בטוח/ה בעצמי.", resultType: "ready" },
+          { text: "כי אני מפחד/ת מהביקורת שתבוא כשאצליח או אכשל.", resultType: "judgment" },
+          { text: "כי אני עדיין מנסה להבין איך לעשות את זה מושלם.", resultType: "overthinking" },
+          { text: "כי אני מחכה שמישהו ייתן לי אישור שזה באמת בסדר להתחיל.", resultType: "approval" },
+          { text: "כי למרות שזה כואב להישאר, זה עדיין מרגיש יותר בטוח מלעזוב.", resultType: "knowsButStuck" }
+        ]
+      }
     ];
 
     const quizResults = {
@@ -792,12 +803,12 @@
     function renderQuestion() {
       const currentQuestion = quizQuestions[currentQuestionIndex];
       progressText.textContent = `שאלה ${currentQuestionIndex + 1} מתוך ${quizQuestions.length}`;
-      questionTitle.textContent = currentQuestion.title;
+      questionTitle.textContent = currentQuestion.question;
 
-      optionsList.innerHTML = currentQuestion.options
+      optionsList.innerHTML = currentQuestion.answers
         .map((option, index) => {
           const isSelected = selectedAnswers[currentQuestionIndex] === option.resultType ? "selected" : "";
-          return `<button class="option-item ${isSelected}" type="button" data-index="${index}"><span class="answer-text">${option.label}</span><span class="answer-indicator"></span></button>`;
+          return `<button class="option-item ${isSelected}" type="button" data-index="${index}"><span class="answer-text">${option.text}</span><span class="answer-indicator"></span></button>`;
         })
         .join("");
 
@@ -818,7 +829,7 @@
 
     function selectAnswer(optionIndex) {
       const question = quizQuestions[currentQuestionIndex];
-      const answerType = question.options[optionIndex].resultType;
+      const answerType = question.answers[optionIndex].resultType;
       selectedAnswers[currentQuestionIndex] = answerType;
       renderQuestion();
     }
@@ -845,6 +856,7 @@
     }
 
     function calculateResult() {
+      // Count how many times each resultType was selected
       const counts = selectedAnswers.reduce((acc, resultType) => {
         acc[resultType] = (acc[resultType] || 0) + 1;
         return acc;
@@ -853,12 +865,16 @@
       const highestCount = Math.max(...Object.values(counts));
       const tiedTypes = Object.keys(counts).filter((type) => counts[type] === highestCount);
 
-      let resultType = tiedTypes[0];
-      if (tiedTypes.length > 1) {
-        const latest = [...selectedAnswers].reverse().find((type) => tiedTypes.includes(type));
-        if (latest) {
-          resultType = latest;
-        }
+      let resultType;
+      if (tiedTypes.length === 1) {
+        // Clear winner — no tie
+        resultType = tiedTypes[0];
+      } else {
+        // Tie: pick the resultType that appeared latest in the answer sequence.
+        // selectedAnswers[i] holds the chosen resultType for question i (0-based).
+        // Reversing the array and calling .find() returns the tied type
+        // from the highest-numbered question — i.e. the most recent answer.
+        resultType = [...selectedAnswers].reverse().find((type) => tiedTypes.includes(type));
       }
 
       currentResultType = resultType;
