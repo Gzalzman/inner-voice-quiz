@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>מה הקול הפנימי שמחזיק אותך במקום?</title>
+  <style>
+    :root {
+        --bg: #b9a480;
+        --surface: #fff6e9;
+        --surface-soft: #eadbc5;
+        --text: #1f2b20;
+        --muted: #4d5948;
+        --accent: #5f8454;
+        --accent-dark: #4e7045;
+        --border: #b9a98f;
+        --success: #6d8b69;
+        --danger: #b45c52;
+        --shadow: 0 18px 42px rgba(45, 52, 35, 0.18);
+        --radius: 24px;
+    }
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", "Tahoma", sans-serif;
+      background: var(--bg);
+      background-color: var(--bg);
+      color: var(--text);
+      text-rendering: optimizeLegibility;
+      direction: rtl;
+    }
+
+    .page-shell {
+      padding: 20px 16px 40px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .page-content {
+      width: min(100%, 860px);
+      max-width: 860px;
+      display: grid;
+      gap: 20px;
+    }
+
+    .section-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 26px;
+    }
+
+    .landing-card {
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .landing-card h1 {
+        font-size: clamp(1.75rem, 3vw, 2.45rem);
+        line-height: 1.15;
+        font-weight: 700;
+        color: var(--text);
+        max-width: 560px;
+        margin: 0 auto 18px;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      line-height: 1.12;
+      max-width: 620px;
+      margin-bottom: 18px;
+      color: var(--text);
+    }
+
+    .subtitle {
+      margin-top: 0;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.18rem);
+      line-height: 1.8;
+      max-width: 560px;
+    }
+
+    .note {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 0 auto 30px;
+      background: transparent;
+      border: none;
+      padding: 0;
+      max-width: 430px;
+    }
+
+    .note-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      direction: rtl;
+      background: #eadbc5;
+      border: 1px solid #b8a487;
+      color: #364432;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-size: 0.92rem;
+      line-height: 1.25;
+      white-space: nowrap;
+    }
+
+    .note-icon {
+      width: 18px;
+      height: 18px;
+      stroke: #5f8454;
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 360px) {
+      .note-pill {
+        font-size: 0.84rem;
+      }
+    }
+
+    .button-row {
+      margin-top: 24px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      border: none;
+      padding: 16px 18px;
+      border-radius: 999px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      text-align: center;
+      text-decoration: none;
+      transition: transform 0.2s ease, background 0.2s ease;
+      background: var(--accent);
+      color: #ffffff;
+    }
+
+    .button:hover,
+    .button:focus-visible {
+      transform: translateY(-1px);
+      background: var(--accent-dark);
+      outline: none;
+    }
+
+    .button.secondary {
+      background: #fff;
+      color: var(--accent-dark);
+      border: 1px solid var(--accent-dark);
+    }
+
+    .button.secondary:hover {
+      background: #f3f0e7;
+    }
+
+    .button.disabled,
+    .button.disabled:hover {
+      background: #c5c0b4;
+      color: #fff;
+      cursor: not-allowed;
+      transform: none;
+      border-color: transparent;
+      pointer-events: none;
+    }
+
+    .quiz-section,
+    .result-section {
+      display: none;
+    }
+
+    .visible {
+      display: block;
+    }
+
+    .question-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .question-step {
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .question-title {
+      font-size: 1.4rem;
+      margin-bottom: 8px;
+    }
+
+    .option-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .option-item {
+      direction: rtl;
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      width: 100%;
+      text-align: right;
+      padding: 16px 18px;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: var(--surface-soft);
+      color: var(--text);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+    }
+
+    .answer-text {
+      flex: 1;
+      text-align: right;
+      direction: rtl;
+    }
+
+    .answer-indicator {
+      flex-shrink: 0;
+      margin-inline-start: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 1.8px solid #7b8f6b;
+      background: transparent;
+      position: relative;
+    }
+
+    .option-item:hover,
+    .option-item:focus-visible {
+      border-color: var(--accent);
+      background: #eef3e8;
+      outline: none;
+    }
+
+    .option-item.selected {
+      background: #e7f0de;
+      border-color: var(--accent-dark);
+      color: var(--text);
+    }
+
+    .answer-indicator {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 1.8px solid #7b8f6b;
+      background: transparent;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .option-item.selected .answer-indicator {
+      background: var(--accent-dark);
+      border-color: var(--accent-dark);
+    }
+
+    .option-item.selected .answer-indicator::after {
+      content: "✓";
+      color: #fff;
+      font-size: 0.82rem;
+      line-height: 1;
+      position: absolute;
+    }
+
+    .nav-row {
+      margin-top: 22px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .result-card {
+      display: grid;
+      gap: 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 28px 22px;
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    .result-panel {
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+      padding: 0;
+      display: contents;
+    }
+
+    .result-label {
+      color: var(--accent-dark);
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.025em;
+      text-transform: none;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    .result-card h2 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--accent-dark);
+      line-height: 1.15;
+      margin: 0 0 24px 0;
+      font-weight: 700;
+      text-align: center;
+      word-break: break-word;
+    }
+
+    .result-highlight {
+      background: #e8eadf;
+      color: var(--text);
+      border: 1px solid #c7cbb8;
+      border-radius: 20px;
+      padding: 20px 22px;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin: 24px auto 32px;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    .result-intro,
+    .result-paragraph,
+    .result-insight {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.9;
+      max-width: 500px;
+      margin: 0 auto 22px;
+      text-align: center;
+    }
+
+    .result-intro {
+      margin-bottom: 22px;
+    }
+
+    .result-paragraph {
+      margin-bottom: 22px;
+    }
+
+    .result-insight {
+      margin-bottom: 0;
+    }
+
+    .cta-text,
+    .secondary-cta,
+    .form-note,
+    .whatsapp-note {
+      line-height: 1.8;
+      color: var(--muted);
+    }
+
+    .form-intro {
+      margin-top: 28px;
+      padding: 26px 22px;
+      background: #eadbc5;
+      border: 1px solid #d4c4b0;
+      border-radius: 24px;
+      color: var(--text);
+      text-align: center;
+      line-height: 1.6;
+      max-width: 620px;
+      margin-inline: auto;
+      margin-bottom: 28px;
+      box-shadow: 0 8px 16px rgba(45, 52, 35, 0.06);
+    }
+
+    .form-intro-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0 0 14px 0;
+      line-height: 1.3;
+    }
+
+    .form-intro-text {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin: 0 0 12px 0;
+      line-height: 1.7;
+    }
+
+    .form-intro-text:last-child {
+      margin-bottom: 0;
+    }
+
+    .form-panel {
+        width: 100%;
+        max-width: 520px;
+        margin: 28px auto 0;
+        padding: 24px 20px;
+        box-sizing: border-box;
+        background: #fff8ee;
+        border: 1px solid var(--border);
+        border-radius: 22px;
+    }
+
+    .form-grid {
+        width: 100%;
+        display: grid;
+        gap: 18px;
+        direction: rtl;
+        text-align: right;
+        box-sizing: border-box;
+    }
+
+    .field-hint {
+        margin: -4px 0 0;
+        color: var(--muted);
+        font-size: 0.85rem;
+        line-height: 1.5;
+        text-align: right;
+    }
+
+    .field-group {
+      display: grid;
+      gap: 10px;
+      width: 100%;
+      text-align: right;
+      box-sizing: border-box;
+    }
+
+    .field-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--text);
+        font-size: 0.95rem;
+        font-weight: 600;
+        text-align: right;
+    }
+
+    .field-group input,
+    .field-group textarea {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        direction: rtl;
+        text-align: right;
+        background: #fffaf2;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 14px 16px;
+        color: var(--text);
+        font-size: 1rem;
+        line-height: 1.5;
+        font-family: inherit;
+    }
+
+    
+    .field-group input:focus,
+    .field-group textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(95, 132, 84, 0.18);
+    }
+
+    .button-row {
+      margin-top: 24px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .button.main-action {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 12px 28px rgba(95, 132, 84, 0.22);
+      width: 100%;
+      border-radius: 999px;
+      padding: 16px 22px;
+      font-weight: 700;
+      margin-top: 12px;
+    }
+
+    .button.main-action:hover,
+    .button.main-action:focus-visible {
+      background: var(--accent-dark);
+    }
+
+    .whatsapp-note {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-top: 18px;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .result-paragraph strong {
+      color: var(--text);
+    }
+
+    .soft-line {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    @media (min-width: 720px) {
+      .page-shell {
+        padding: 36px 0 56px;
+      }
+
+      .section-card {
+        padding: 32px;
+      }
+
+      .result-card {
+        padding: 40px 36px;
+      }
+
+      .form-panel {
+        padding: 32px 36px;
+      }
+
+      .button-row {
+        justify-content: center;
+      }
+
+      .button {
+        width: 100%;
+        min-width: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page-shell">
+    
+    <div class="page-content">
+
+      <section class="section-card landing-card" aria-labelledby="landing-title">
+        <h1 id="landing-title" align="center">מה הקול הפנימי שמחזיק אותך במקום?</h1>
+        <p class="subtitle">שאלון קצר שיעזור לך לזהות איזה קול פנימי אולי עוצר אותך מלעשות את הצעד הבא.</p>
+        <div class="note" aria-label="פרטי השאלון">
+          <span class="note-pill">
+            <svg class="note-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01" />
+            </svg>
+            6 שאלות
+          </span>
+
+          <span class="note-pill">
+            <svg class="note-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 7v5l3 2" />
+              <path d="M21 12a9 9 0 1 1-18 0a9 9 0 0 1 18 0z" />
+            </svg>
+            פחות מ־2 דקות
+          </span>
+
+          <span class="note-pill">
+            <svg class="note-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20 21a8 8 0 0 0-16 0" />
+              <path d="M12 13a4 4 0 1 0 0-8a4 4 0 0 0 0 8z" />
+            </svg>
+            תוצאה אישית בסוף
+          </span>
+        </div>
+        <div class="button-row">
+          <button class="button" id="startQuizButton" type="button">להתחלת השאלון</button>
+        </div>
+      </section>
+
+      <section class="section-card quiz-section" id="quizSection">
+        <div class="question-head">
+          <div>
+            <div class="question-step" id="progressText">שאלה 1 מתוך 6</div>
+            <h2 class="question-title" id="questionTitle">שאלה תתקבל כאן</h2>
+          </div>
+        </div>
+        <div class="option-list" id="optionsList"></div>
+        <div class="nav-row">
+          <button class="button secondary" id="backButton" type="button">חזרה</button>
+          <button class="button" id="nextButton" type="button">הבא</button>
+        </div>
+      </section>
+
+      <section class="section-card result-section" id="resultSection">
+        <div class="result-card result-panel">
+          <div class="result-label">התוצאה שלך</div>
+          <h2 id="resultTitle">הצגת תוצאה</h2>
+          <p class="result-highlight">לפעמים מה שעוצר אותנו הוא לא חוסר יכולת — אלא הפחד מאיך זה ייראה מבחוץ.</p>
+          <p class="result-intro" id="resultReflection">רפלקציה רגשית קצרה על תחושתך.</p>
+          <p class="result-paragraph" id="resultPattern">הסבר על הדפוס שעולה מהתשובות.</p>
+          <p class="result-insight" id="resultInsight">תובנה עדינה שתעזור להתחבר למה אפשר לעשות הלאה.</p>
+        </div>
+
+        <div class="form-intro">
+          <h3 class="form-intro-title">מהתוצאה שקיבלת אפשר ללמוד ש...</h3>
+          <p class="form-intro-text">יש קול פנימי שמנסה להגן עליך — אבל יכול להיות שהוא גם מחזיק אותך במקום.</p>
+          <p class="form-intro-text">אם משהו בתוצאה הזו הרגיש לך נכון, אפשר לשלוח לי אותה בוואטסאפ.<br>נבדוק יחד מה היא מספרת על המקום שבו את/ה נמצא/ת עכשיו, ומה יכול להיות הצעד הבא שלך.</p>
+        </div>
+        <div class="form-panel">
+          <form class="form-grid" id="leadForm" novalidate>
+            <div class="field-group">
+              <label for="nameInput">שם מלא *</label>
+              <input id="nameInput" type="text" placeholder="שם פרטי" required />
+            </div>
+            <div class="field-group">
+              <label for="phoneInput">טלפון *</label>
+              <input id="phoneInput" type="tel" placeholder="05XXXXXXXX" required />
+            </div>
+            <div class="field-group">
+              <label for="emailInput">אימייל (אופציונלי)</label>
+              <input id="emailInput" type="email" placeholder="אימייל" />
+            </div>
+            <div class="field-group">
+              <label for="messageInput">מה הדבר שהכי היית רוצה להתחיל להזיז בחיים שלך עכשיו?</label>
+              <textarea id="messageInput" placeholder="תכתוב/י כאן..."></textarea>
+            </div>
+            <p class="field-hint">הסימון * מציין שדה חובה.</p>
+          </form>
+        </div>
+
+        <div class="button-row" style="margin-top: 8px;">
+          <a id="whatsAppButton" class="button main-action disabled" href="#" target="_blank" rel="noopener noreferrer">שליחת התוצאה לגל בוואטסאפ</a>
+        </div>
+
+        <p class="whatsapp-note">הפרטים לא נשמרים באתר בשלב זה — הם נשלחים אליי רק דרך הודעת הוואטסאפ שתיפתח אצלך.</p>
+      </section>
+
+    </div>
+  </main>
+
+  <script>
+    const quizQuestions = [
+      {
+        title: "כשאת/ה מתקרב/ת לשינוי, איזה קול פנימי גורם לך להישאר במקום?",
+        options: [
+          { label: "אני מרגיש/ה שאני עדיין לא מוכן/ה מספיק", resultType: "ready" },
+          { label: "אני חושב/ת איך אחרים יגיבו", resultType: "judgment" },
+          { label: "אני מחפש/ת עוד אפשרויות לפני שאני מחליט/ה", resultType: "overthinking" },
+          { label: "אני מחכה לאישור ממישהו אחר", resultType: "approval" },
+        ],
+      },
+      {
+        title: "כשאת/ה עומד/ת מול בחירה שיכולה להזיז אותך קדימה, איזה קול פנימי משתלט?",
+        options: [
+          { label: "הקול שאומר לי: זה לא הזמן המתאים, עדיף לחכות שהתנאים יהיו יותר ברורים.", resultType: "ready" },
+          { label: "הקול שאומר לי: עדיף להישאר במה שמוכר, גם אם כבר לא באמת טוב לי שם.", resultType: "judgment" },
+          { label: "הקול שאומר לי: אני צריך/ה להבין עוד קצת לפני שאפשר באמת לבחור.", resultType: "overthinking" },
+          { label: "הקול שגורם לי לזוז רק כשהלחץ כבר נהיה חזק מדי.", resultType: "approval" },
+        ],
+      },
+      {
+        title: "כשמגיעה הזדמנות שאת/ה באמת רוצה, מה קורה אצלך רגע אחרי ההתלהבות הראשונית?",
+        options: [
+          { label: "הקול שאומר לי: מי אני בכלל שאקח את זה על עצמי? אולי אני לא באמת מוכן/ה.", resultType: "ready" },
+          { label: "הקול שמתחיל להריץ בראש את כל מה שעלול להשתבש, עד שההתלהבות נעלמת.", resultType: "judgment" },
+          { label: "הקול שאומר לי: עדיף להישאר במה שמוכר ובטוח, לא שווה להסתכן בשביל זה.", resultType: "overthinking" },
+          { label: "הקול שמזכיר לי את כל המחויבויות שלי וגורם לי להרגיש לא נעים לרצות משהו בשביל עצמי.", resultType: "approval" },
+        ],
+      },
+      {
+        title: "כשאת/ה חושב/ת על העתיד שאת/ה רוצה, איזה קול פנימי עוצר אותך?",
+        options: [
+          { label: "הקול שמריץ לי בראש את כל מה שעלול להשתבש, עד שהשינוי עצמו מתחיל להרגיש מפחיד.", resultType: "ready" },
+          { label: "הקול שמשווה אותי לאחרים וגורם לי להרגיש שאני לא מספיק טוב/ה.", resultType: "judgment" },
+          { label: "הקול שאומר לי שזה גדול עליי כרגע, ושעדיף לחכות עד שארגיש מוכן/ה יותר.", resultType: "overthinking" },
+          { label: "הקול שאומר לי: חבל להשקיע בזה אנרגיה, בסוף בטח משהו ישתבש.", resultType: "approval" },
+        ],
+      },
+      {
+        title: "כשאת/ה מחליט/ה שהפעם את/ה באמת הולך/ת על שינוי, איזו מחשבה קופצת ראשונה ועוצרת אותך?",
+        options: [
+          { label: "המחשבה שאומרת לי: עדיף לא לערבב את הקלפים, אולי כדאי להסתפק במה שיש.", resultType: "ready" },
+          { label: "המחשבה שאומרת לי: אני עדיין לא מוכן/ה, צריך עוד ללמוד, לחסוך או להתארגן לפני שאעשה צעד אמיתי.", resultType: "judgment" },
+          { label: "המחשבה שאומרת לי: כבר ניסיתי דברים דומים בעבר וזה לא באמת החזיק, אז למה שהפעם זה יהיה שונה?", resultType: "overthinking" },
+          { label: "המחשבה שאומרת לי: זה לא הזמן הנכון, יש אנשים ודברים שצריכים אותי עכשיו יותר.", resultType: "approval" },
+        ],
+      },
+      {
+        title: "כשמישהו שואל אותך \"למה את/ה עדיין מחכה?\", מה התשובה האמיתית שמתחת להסבר הרגיל?",
+        options: [
+          { label: "האמת היא שאני מפחד/ת שברגע שזה יצליח, זה ידרוש ממני מחויבות ומחיר שאני לא בטוח/ה שאני רוצה לשלם.", resultType: "knowsButStuck" },
+          { label: "האמת היא שאני חושב/ת יותר מדי על מה יגידו, איך ישפטו אותי, ומה יקרה אם זה לא יצליח.", resultType: "ready" },
+          { label: "האמת היא שנוח לי להאמין שאני תיכף עושה את זה, למרות שבפועל אני רק דוחה את הרגע להתחיל.", resultType: "judgment" },
+          { label: "האמת היא שעמוק בפנים אני עדיין לא בטוח/ה שזה באמת מגיע לי, או שאני מסוגל/ת להחזיק שינוי כזה לאורך זמן.", resultType: "overthinking" },
+        ],
+      },
+    ];
+
+    const quizResults = {
+      ready: {
+        title: "הקול של 'עוד לא מוכן/ה'",
+        reflection: "יש בך תחושה של תמיכה ורצון, אבל הקול הפנימי מזכיר לך להמתין עד שתהיה שלם/ה יותר.",
+        pattern: "כשתשומת הלב מופנית ל'מתי אהיה מוכן/ה', זה יכול להיות נעים במידה מסוימת, אבל גם לרסן את הצעד הראשון שאתם מחפשים.",
+        insight: "להתחיל לא חייב להיות מושלם. הצעד הבא יכול להיות קטן, רך, ועדיין משמעותי - גם אם עדיין לא הכול מרגיש מסודר.",
+      },
+      judgment: {
+        title: "הקול של 'מה יגידו?'",
+        reflection: "נשמע שהעיניים של העולם סביבך משפיעות על ההרגשה שלך יותר מהקול הפנימי האמיתי.",
+        pattern: "כשפחד משיפוט חזק, לעיתים קשה להתרכז במה עושה לך טוב באמת, והחלטות נדחקות אחורה.",
+        insight: "אפשר לשים לב מה דווקא עוזר לך להרגיש יותר בטוח/ה בפנים, בלי לתת לקולות חיצוניים לקבוע את הקצב.",
+      },
+      overthinking: {
+        title: "הקול של 'חושב/ת יותר מדי'",
+        reflection: "הראש שלך עובד שעות נוספות, וזה יכול להרגיש כאילו כל צעד חדש צריך להיות מושלם.",
+        pattern: "כשעוברים בין אפשרויות בלי לסגור מעגל, הרגש השקט שמאפשר פעולה נשאר מחוץ לתמונה.",
+        insight: "לעיתים כיוון קטן או בחירה ראשונית יוצרים יותר תנועה מאשר עוד ניתוח של כל תרחיש אפשרי.",
+      },
+      approval: {
+        title: "הקול של 'מחכה לאישור'",
+        reflection: "יש בך הערכה למה אומרת הסביבה, והקול הזה מבקש ממך לחכות לרגע שבו מישהו אומר 'כן'.",
+        pattern: "זה טבעי לרצות וודאות, אבל זה גם יכול לעכב אותך מלהתחבר למה נכון לך באמת כאן ועכשיו.",
+        insight: "אם תשאל/י את עצמך מה יכול להרגיש נכון גם בלי אישור חיצוני, יתכן שתמצא/י דרך להתחיל מבלי שהתוצאה תהיה חד משמעית.",
+      },
+      knowsButStuck: {
+        title: "הקול של 'כבר יודע/ת, אבל תקוע/ה'",
+        reflection: "נראה שיש בך מודעות ברורה למה נכון לך, יחד עם תחושת מעצור שלא משחרר לפעולה.",
+        pattern: "זה מיוחד לדעת את הכיוון ולא להיות ממש פנוי לצעוד בו. לפעמים התנועה צריכה רוך ולא בהכרח תכנון מושלם.",
+        insight: "אפשר לנסות לזהות את הצעד הכי קטן שאפשר לעשות עכשיו, כזה שמקדם אותך בלי להעמיס על עצמך.",
+      },
+    };
+
+    const quizSection = document.getElementById("quizSection");
+    const resultSection = document.getElementById("resultSection");
+    const startQuizButton = document.getElementById("startQuizButton");
+    const questionTitle = document.getElementById("questionTitle");
+    const optionsList = document.getElementById("optionsList");
+    const progressText = document.getElementById("progressText");
+    const backButton = document.getElementById("backButton");
+    const nextButton = document.getElementById("nextButton");
+    const resultTitle = document.getElementById("resultTitle");
+    const resultReflection = document.getElementById("resultReflection");
+    const resultPattern = document.getElementById("resultPattern");
+    const resultInsight = document.getElementById("resultInsight");
+    const nameInput = document.getElementById("nameInput");
+    const phoneInput = document.getElementById("phoneInput");
+    const emailInput = document.getElementById("emailInput");
+    const messageInput = document.getElementById("messageInput");
+    const whatsAppButton = document.getElementById("whatsAppButton");
+
+    let currentQuestionIndex = 0;
+    let selectedAnswers = [];
+    let currentResultType = null;
+
+    function startQuiz() {
+      currentQuestionIndex = 0;
+      selectedAnswers = [];
+      currentResultType = null;
+      quizSection.classList.add("visible");
+      resultSection.classList.remove("visible");
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      const currentQuestion = quizQuestions[currentQuestionIndex];
+      progressText.textContent = `שאלה ${currentQuestionIndex + 1} מתוך ${quizQuestions.length}`;
+      questionTitle.textContent = currentQuestion.title;
+
+      optionsList.innerHTML = currentQuestion.options
+        .map((option, index) => {
+          const isSelected = selectedAnswers[currentQuestionIndex] === option.resultType ? "selected" : "";
+          return `<button class="option-item ${isSelected}" type="button" data-index="${index}"><span class="answer-text">${option.label}</span><span class="answer-indicator"></span></button>`;
+        })
+        .join("");
+
+      optionsList.querySelectorAll("button").forEach((button) => {
+        button.addEventListener("click", () => {
+          const index = Number(button.dataset.index);
+          selectAnswer(index);
+        });
+      });
+
+      backButton.style.display = currentQuestionIndex === 0 ? "none" : "inline-flex";
+      nextButton.textContent = currentQuestionIndex === quizQuestions.length - 1 ? "ראה תוצאה" : "הבא";
+
+      const selected = selectedAnswers[currentQuestionIndex];
+      nextButton.disabled = !selected;
+      nextButton.classList.toggle("disabled", !selected);
+    }
+
+    function selectAnswer(optionIndex) {
+      const question = quizQuestions[currentQuestionIndex];
+      const answerType = question.options[optionIndex].resultType;
+      selectedAnswers[currentQuestionIndex] = answerType;
+      renderQuestion();
+    }
+
+    function goNext() {
+      const selected = selectedAnswers[currentQuestionIndex];
+      if (!selected) {
+        return;
+      }
+      if (currentQuestionIndex < quizQuestions.length - 1) {
+        currentQuestionIndex += 1;
+        renderQuestion();
+      } else {
+        calculateResult();
+      }
+    }
+
+    function goBack() {
+      if (currentQuestionIndex === 0) {
+        return;
+      }
+      currentQuestionIndex -= 1;
+      renderQuestion();
+    }
+
+    function calculateResult() {
+      const counts = selectedAnswers.reduce((acc, resultType) => {
+        acc[resultType] = (acc[resultType] || 0) + 1;
+        return acc;
+      }, {});
+
+      const highestCount = Math.max(...Object.values(counts));
+      const tiedTypes = Object.keys(counts).filter((type) => counts[type] === highestCount);
+
+      let resultType = tiedTypes[0];
+      if (tiedTypes.length > 1) {
+        const latest = [...selectedAnswers].reverse().find((type) => tiedTypes.includes(type));
+        if (latest) {
+          resultType = latest;
+        }
+      }
+
+      currentResultType = resultType;
+      renderResult();
+    }
+
+    function renderResult() {
+      const resultData = quizResults[currentResultType];
+      if (!resultData) {
+        return;
+      }
+
+      quizSection.classList.remove("visible");
+      resultSection.classList.add("visible");
+
+      resultTitle.textContent = resultData.title;
+      resultReflection.textContent = resultData.reflection;
+      resultPattern.textContent = resultData.pattern;
+      resultInsight.textContent = resultData.insight;
+
+      nameInput.value = "";
+      phoneInput.value = "";
+      emailInput.value = "";
+      messageInput.value = "";
+      updateWhatsAppLink();
+    }
+
+    function updateWhatsAppLink() {
+      const name = nameInput.value.trim();
+      const phone = phoneInput.value.trim();
+      const email = emailInput.value.trim();
+      const messageText = messageInput.value.trim();
+      const isValid = name !== "" && phone !== "";
+
+      if (!currentResultType) {
+        whatsAppButton.href = "#";
+        whatsAppButton.classList.add("disabled");
+        return;
+      }
+
+      const resultTitleText = quizResults[currentResultType]?.title || "תוצאה אישית";
+      const whatsappMessage = `היי גל,\nעשיתי את השאלון "מה הקול הפנימי שמחזיק אותך במקום?"\n\nשם:\n${name}\n\nטלפון:\n${phone}\n\nאימייל:\n${email || ""}\n\nהתוצאה שיצאה לי:\n${resultTitleText}\n\nמה הייתי רוצה להתחיל להזיז:\n${messageText}\n\nאשמח להבין מה זה אומר ואיך אפשר להתחיל משם.`;
+      const encodedMessage = encodeURIComponent(whatsappMessage);
+      const whatsappUrl = `https://wa.me/972528330884?text=${encodedMessage}`;
+
+      if (isValid) {
+        whatsAppButton.href = whatsappUrl;
+        whatsAppButton.classList.remove("disabled");
+      } else {
+        whatsAppButton.href = "#";
+        whatsAppButton.classList.add("disabled");
+      }
+    }
+
+    startQuizButton.addEventListener("click", startQuiz);
+    nextButton.addEventListener("click", goNext);
+    backButton.addEventListener("click", goBack);
+    [nameInput, phoneInput, emailInput, messageInput].forEach((field) => {
+      field.addEventListener("input", updateWhatsAppLink);
+    });
+
+    whatsAppButton.addEventListener("click", (event) => {
+      if (whatsAppButton.classList.contains("disabled")) {
+        event.preventDefault();
+      }
+    });
+
+    // Initialize with landing visible and other sections hidden.
+    quizSection.classList.remove("visible");
+    resultSection.classList.remove("visible");
+  </script>
+</body>
+</html>
