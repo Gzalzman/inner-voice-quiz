@@ -839,7 +839,7 @@
       <div class="progress-bar-bg">
         <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
       </div>
-      <span class="progress-label" id="progressLabel">שלב 1 מתוך 7</span>
+      <span class="progress-label" id="progressLabel">שלב 1 מתוך 6</span>
     </div>
 
     <!-- Step 1 — Life area -->
@@ -868,7 +868,7 @@
 
     <!-- Step 2 -->
     <div class="step-card" id="step-2">
-      <div class="step-num">שלב 2 מתוך 7</div>
+      <div class="step-num">שלב 2 מתוך 6</div>
       <h3>איפה התחושה הזו הכי מורגשת אצלך כרגע?</h3>
       <p class="step-helper">בחר/י את המקום שהכי קרוב למה שאת/ה חווה. לא צריך לדייק — רק לשים לב איפה הגוף מאותת.</p>
       <div class="options-grid" id="opts-2">
@@ -887,26 +887,9 @@
       </div>
     </div>
 
-    <!-- Step 3 — open text -->
-    <div class="step-card" id="step-3">
-      <div class="step-num">שלב 3 מתוך 7</div>
-      <h3>אם התחושה הזו הייתה צבע, צורה או טמפרטורה — איך היא הייתה נראית או מרגישה?</h3>
-      <p class="step-helper">אין כאן תשובה נכונה. המטרה היא לתת לתחושה דימוי: צבע, מרקם, חום/קור, כובד, לחץ, תנועה או צורה.<br />התיאור שלך יעזור לזהות איך התחושה מופיעה אצלך מבפנים.</p>
-      <textarea
-        class="step-textarea"
-        id="textarea-3"
-        placeholder="לדוגמה: אפור וכבד, חם ודחוס, חד ומתכווץ, קר וריק..."
-        oninput="onTextInput(3)"
-      ></textarea>
-      <div class="step-nav">
-        <button class="btn-next" id="next-3" onclick="nextStep(3)" disabled>המשך</button>
-        <button class="btn-back" onclick="prevStep(3)">חזרה</button>
-      </div>
-    </div>
-
     <!-- Step 4 -->
     <div class="step-card" id="step-4">
-      <div class="step-num">שלב 4 מתוך 7</div>
+      <div class="step-num">שלב 3 מתוך 6</div>
       <h3>איזה משפט עבר לך בראש ממש לפני שהתחושה התחילה?</h3>
       <div class="options-grid" id="opts-4">
         <button class="option-btn" data-step="4" data-val="זה גדול עליי">זה גדול עליי</button>
@@ -925,7 +908,7 @@
 
     <!-- Step 5 -->
     <div class="step-card" id="step-5">
-      <div class="step-num">שלב 5 מתוך 7</div>
+      <div class="step-num">שלב 4 מתוך 6</div>
       <h3>איך הקול הזה נשמע?</h3>
       <div class="options-grid" id="opts-5">
         <button class="option-btn" data-step="5" data-val="ביקורתי">ביקורתי</button>
@@ -944,7 +927,7 @@
 
     <!-- Step 6 -->
     <div class="step-card" id="step-6">
-      <div class="step-num">שלב 6 מתוך 7</div>
+      <div class="step-num">שלב 5 מתוך 6</div>
       <h3>מה ייתכן שהקול הזה מנסה למנוע ממך להרגיש?</h3>
       <div class="options-grid" id="opts-6">
         <button class="option-btn" data-step="6" data-val="כישלון">כישלון</button>
@@ -963,7 +946,7 @@
 
     <!-- Step 7 -->
     <div class="step-card" id="step-7">
-      <div class="step-num">שלב 7 מתוך 7</div>
+      <div class="step-num">שלב 6 מתוך 6</div>
       <h3>האם יכול להיות שהקול הזה הוא לא "את/ה" — אלא מנגנון הגנה שפועל בתוכך?</h3>
       <div class="options-grid" id="opts-7">
         <button class="option-btn full-width" data-step="7" data-val="כן, זה מרגיש כמו מנגנון הגנה">כן, זה מרגיש כמו מנגנון הגנה</button>
@@ -1025,36 +1008,6 @@
 </section>
 
 
-<!-- ════════════════════════════ EDUCATION ═══════════════════════════════ -->
-<section id="education">
-  <div class="container">
-    <div class="edu-card">
-      <div class="card-icon">💡</div>
-      <h2>מה אפשר ללמוד מהתרגיל?</h2>
-      <p>
-        מתח, עומס או חרדה מופיעים לעיתים קרובות קודם בגוף — ורק לאחר מכן הופכים למחשבה מודעת.
-        כשמזהים את התחושה הגופנית, אפשר להתחיל לשאול: <em>מה הקול שמאחוריה?</em>
-      </p>
-      <p style="margin-top:12px;">
-        הקול הפנימי שעלה בתרגיל לא בהכרח אומר אמת — לעיתים הוא מנגנון הגנה
-        שהתגבש בשלב מוקדם בחיים, ומנסה למנוע חוויות כואבות כמו:
-      </p>
-      <ul class="edu-list">
-        <li>ביקורת ושיפוט של אחרים</li>
-        <li>כישלון ואכזבה</li>
-        <li>דחייה וחוסר שייכות</li>
-        <li>חשיפה וחוסר שליטה</li>
-        <li>פגיעה ובושה</li>
-      </ul>
-      <p style="margin-top:16px;">
-        ההכרה שהקול הזה הוא <strong>לא "אני"</strong>, אלא חלק שמגן עליך —
-        היא לעיתים הצעד הראשון לשינוי אמיתי.
-      </p>
-    </div>
-  </div>
-</section>
-
-
 <!-- ═══════════════════════════════ THANK YOU ════════════════════════════ -->
 <section id="thankyou">
   <div class="container">
@@ -1101,6 +1054,36 @@
 </section>
 
 
+<!-- ════════════════════════════ EDUCATION ═══════════════════════════════ -->
+<section id="education">
+  <div class="container">
+    <div class="edu-card">
+      <div class="card-icon">💡</div>
+      <h2>מה אפשר ללמוד מהתרגיל?</h2>
+      <p>
+        מתח, עומס או חרדה מופיעים לעיתים קרובות קודם בגוף — ורק לאחר מכן הופכים למחשבה מודעת.
+        כשמזהים את התחושה הגופנית, אפשר להתחיל לשאול: <em>מה הקול שמאחוריה?</em>
+      </p>
+      <p style="margin-top:12px;">
+        הקול הפנימי שעלה בתרגיל לא בהכרח אומר אמת — לעיתים הוא מנגנון הגנה
+        שהתגבש בשלב מוקדם בחיים, ומנסה למנוע חוויות כואבות כמו:
+      </p>
+      <ul class="edu-list">
+        <li>ביקורת ושיפוט של אחרים</li>
+        <li>כישלון ואכזבה</li>
+        <li>דחייה וחוסר שייכות</li>
+        <li>חשיפה וחוסר שליטה</li>
+        <li>פגיעה ובושה</li>
+      </ul>
+      <p style="margin-top:16px;">
+        ההכרה שהקול הזה הוא <strong>לא "אני"</strong>, אלא חלק שמגן עליך —
+        היא לעיתים הצעד הראשון לשינוי אמיתי.
+      </p>
+    </div>
+  </div>
+</section>
+
+
 <!-- ═══════════════════════════════ FOOTER ═══════════════════════════════ -->
 <footer>
   <div class="container">
@@ -1117,7 +1100,8 @@
   // ── State ──────────────────────────────────────────
   const answers = {};
   let currentStep = 1;
-  const TOTAL = 7;
+  const TOTAL = 6;
+  const STEP_SEQUENCE = [1, 2, 4, 5, 6, 7]; // step 3 removed
 
   // ── Progress ────────────────────────────────────────
   function updateProgress(step) {
@@ -1133,7 +1117,7 @@
     landing:  ['hero'],
     intro:    ['intro'],
     exercise: ['exercise'],
-    lead:     ['completion', 'lead', 'education'],
+    lead:     ['completion', 'lead'],
     thankyou: ['thankyou', 'whatsapp']
   };
 
@@ -1195,15 +1179,17 @@
       card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
     currentStep = n;
-    updateProgress(n);
+    updateProgress(STEP_SEQUENCE.indexOf(n) + 1);
   }
 
   function nextStep(from) {
-    if (from < TOTAL) showStep(from + 1);
+    var idx = STEP_SEQUENCE.indexOf(from);
+    if (idx >= 0 && idx < STEP_SEQUENCE.length - 1) showStep(STEP_SEQUENCE[idx + 1]);
   }
 
   function prevStep(from) {
-    if (from > 1) showStep(from - 1);
+    var idx = STEP_SEQUENCE.indexOf(from);
+    if (idx > 0) showStep(STEP_SEQUENCE[idx - 1]);
   }
 
   // ── Finish exercise ─────────────────────────────────
@@ -1300,7 +1286,6 @@
     var area   = a.step1 || '';
     var areadesc = a.step1desc || '';
     var body   = a.step2 || 'הגוף';
-    var sense  = a.step3 || '—';
     var sent   = a.step4 || '—';
     var tone   = a.step5 || '—';
     var prot   = a.step6 || '—';
@@ -1316,7 +1301,6 @@
       if (areadesc) html += 'כתבת שם: <strong>״' + areadesc + '״</strong>. ';
     }
     html += 'התחושה הגיעה אליך דרך <strong>' + body + '</strong>. ';
-    html += 'כשניסית לתאר אותה, עלה: <strong>״' + sense + '״</strong>. ';
     html += 'המשפט שעבר לך בראש היה <strong>״' + sent + '״</strong>, ';
     html += 'והקול נשמע <strong>' + tone + '</strong>. ';
     html += 'יכול להיות שהקול הזה מנסה להגן עליך מפני <strong>' + prot + '</strong>.';
@@ -1331,11 +1315,21 @@
     return html;
   }
 
+  // ── Phone normalization ──────────────────────────────
+  function normalizeIsraeliPhone(phone) {
+    var cleaned = String(phone || '').replace(/\D/g, '');
+    if (cleaned.startsWith('972')) { return cleaned; }
+    if (cleaned.startsWith('0'))   { return '972' + cleaned.slice(1); }
+    if (cleaned.startsWith('5') && cleaned.length === 9) { return '972' + cleaned; }
+    return cleaned;
+  }
+
   // ── Form submission ──────────────────────────────────
   function submitForm(e) {
     e.preventDefault();
-    var name     = document.getElementById('fname').value.trim();
-    var phone    = document.getElementById('phone').value.trim();
+    var name          = document.getElementById('fname').value.trim();
+    var originalPhone = document.getElementById('phone').value.trim();
+    var normalizedPhone = normalizeIsraeliPhone(originalPhone);
     var callback = document.getElementById('callbackCheck').checked;
 
     var resultType = calcResultType(answers);
@@ -1353,11 +1347,11 @@
       createdAt:           new Date().toISOString(),
       source:              window.location.href,
       name:                name,
-      phone:               phone,
+      phoneOriginal:       originalPhone,
+      phoneNormalized:     normalizedPhone,
       lifeArea:            answers.step1     || '',
       lifeAreaDescription: answers.step1desc || '',
       bodyLocation:        answers.step2     || '',
-      sensationDescription:answers.step3     || '',
       innerSentence:       answers.step4     || '',
       voiceTone:           answers.step5     || '',
       protectedFeeling:    answers.step6     || '',
@@ -1371,12 +1365,25 @@
     document.getElementById('resultContent').innerHTML = buildResultHTML(resultType, answers);
 
     // Set optional WhatsApp CTA (user must click manually)
-    var waOptMsg = "היי גל, סיימתי את התרגיל 'השער דרך הגוף' והשארתי פרטים. אשמח לשמוע איך אפשר לעבוד עם הקול שעלה לי בתהליך אימון.";
-    if (callback) waOptMsg += "\n\nאשמח שתחזרו אליי לבדיקת התאמה קצרה.";
+    var waLines = ["ליד חדש מהתרגיל 'השער דרך הגוף' 🌿", ''];
+    waLines.push('שם: '              + name);
+    waLines.push('טלפון: '          + normalizedPhone);
+    waLines.push('טלפון כפי שהוזן: ' + originalPhone);
+    waLines.push('');
+    waLines.push('התוצאה: '         + resultTitle);
+    if (answers.step1) waLines.push('תחום: '           + answers.step1);
+    if (answers.step2) waLines.push('איפה בגוף: '      + answers.step2);
+    if (answers.step4) waLines.push('המשפט שעלה: '     + answers.step4);
+    if (answers.step5) waLines.push('הקול נשמע: '      + answers.step5);
+    if (answers.step6) waLines.push('מנסה למנוע: '     + answers.step6);
+    if (answers.step7) waLines.push('מנגנון הגנה: '    + answers.step7);
+    if (callback)      waLines.push('', 'מבקש/ת בדיקת התאמה קצרה ✓');
+    var waOptMsg = waLines.join('\n');
     document.getElementById('thankyouWaBtn').href = 'https://wa.me/972528330884?text=' + encodeURIComponent(waOptMsg);
     document.getElementById('thankyouWaCta').style.display = 'block';
 
     showScreen('thankyou');
+    document.getElementById('education').style.display = 'block';
   }
 
   // ── Init ─────────────────────────────────────────────
